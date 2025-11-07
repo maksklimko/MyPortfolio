@@ -55,12 +55,10 @@ class _AnimatedListViewState extends State<AnimatedListView> {
 
     final itemPosition = itemRect.localToGlobal(Offset.zero);
 
-    print("${index}: ${itemPosition.dy} < ${screenSize.height / 2}");
     if (itemPosition.dy < screenSize.height) {
       _setVisibility(index);
       setState(() {
         checkIndex++;
-        print("itemVisibility: $_itemVisibility");
       });
 
       if (checkIndex == widget.items.length) {
@@ -88,14 +86,13 @@ class _AnimatedListViewState extends State<AnimatedListView> {
             padding: EdgeInsets.only(
               bottom: index < widget.items.length - 1 ? widget.spacing : 0,
             ),
-            child:
-                Align(
-                      alignment: Alignment.center,
-                      key: _itemKeys[index],
-                      child: item,
-                    )
-                    .animate(target: _itemVisibility[index] ? 1.0 : 0.0)
-                    .fadeIn(duration: Duration(milliseconds: 400)),
+            child: Align(
+              alignment: Alignment.center,
+              key: _itemKeys[index],
+              child: item,
+            )
+                .animate(target: _itemVisibility[index] ? 1.0 : 0.0)
+                .fadeIn(duration: Duration(milliseconds: 400)),
           );
         }).toList(),
       ),
