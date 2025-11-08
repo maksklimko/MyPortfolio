@@ -46,7 +46,15 @@ class _MainScreenState extends State<MainScreen> {
                 width: _getImageSize(),
                 height: _getImageSize(),
               ),
-            ),
+            )
+                .animate(delay: 500.milliseconds)
+                .fadeIn(duration: 700.milliseconds, curve: Curves.easeOutCubic)
+                .scaleXY(
+                  begin: 0.92,
+                  end: 1,
+                  duration: 900.milliseconds,
+                  curve: Curves.easeOutBack,
+                ),
           ),
           Spacer(flex: 2),
           SizedBox(
@@ -59,7 +67,15 @@ class _MainScreenState extends State<MainScreen> {
                 fontSize: AdaptiveConstants.getHeaderFontSize(context),
                 fontWeight: FontWeight.bold,
               ),
-            ),
+            )
+                .animate()
+                .fadeIn(duration: 500.milliseconds, curve: Curves.easeOut)
+                .slideY(
+                  begin: 0.1,
+                  end: 0,
+                  duration: 500.milliseconds,
+                  curve: Curves.easeOutCubic,
+                ),
           ),
           Spacer(),
           Text(
@@ -71,7 +87,17 @@ class _MainScreenState extends State<MainScreen> {
               fontWeight: FontWeight.normal,
             ),
             textAlign: _getTextAlign(),
-          ),
+          )
+              .animate(
+                delay: 150.milliseconds,
+              )
+              .fadeIn(duration: 600.milliseconds, curve: Curves.easeOut)
+              .slideY(
+                begin: 0.08,
+                end: 0,
+                duration: 600.milliseconds,
+                curve: Curves.easeOutCubic,
+              ),
           Spacer(flex: 2),
           Row(
             mainAxisAlignment: ScreenUtils.isMobile(context)
@@ -97,7 +123,17 @@ class _MainScreenState extends State<MainScreen> {
                 icon: "assets/icons/mail_icon.svg",
               ),
             ],
-          ),
+          )
+              .animate(
+                delay: 250.milliseconds,
+              )
+              .fadeIn(duration: 500.milliseconds, curve: Curves.easeOut)
+              .slideY(
+                begin: 0.1,
+                end: 0,
+                duration: 500.milliseconds,
+                curve: Curves.easeOutCubic,
+              ),
           Spacer(flex: 2),
           Align(
             alignment: Alignment.center,
