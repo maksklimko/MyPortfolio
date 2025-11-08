@@ -47,36 +47,29 @@ class _MainScreenState extends State<MainScreen> {
                 height: _getImageSize(),
               ),
             )
-                .animate(delay: 500.milliseconds)
-                .fadeIn(duration: 700.milliseconds, curve: Curves.easeOutCubic)
+                .animate()
+                .fadeIn(duration: 1000.milliseconds, curve: Curves.easeOutCubic)
                 .scaleXY(
                   begin: 0.92,
                   end: 1,
-                  duration: 900.milliseconds,
+                  duration: 1000.milliseconds,
                   curve: Curves.easeOutBack,
                 ),
           ),
           Spacer(flex: 2),
           SizedBox(
-            width: double.infinity,
-            child: Text(
-              "Hi, I'm Maks",
-              textAlign: _getTextAlign(),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: AdaptiveConstants.getHeaderFontSize(context),
-                fontWeight: FontWeight.bold,
-              ),
-            )
-                .animate()
-                .fadeIn(duration: 500.milliseconds, curve: Curves.easeOut)
-                .slideY(
-                  begin: 0.1,
-                  end: 0,
-                  duration: 500.milliseconds,
-                  curve: Curves.easeOutCubic,
+              width: double.infinity,
+              child: Text(
+                "Hi, I'm Maks",
+                textAlign: _getTextAlign(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: AdaptiveConstants.getHeaderFontSize(context),
+                  fontWeight: FontWeight.bold,
                 ),
-          ),
+              )
+                  .animate(delay: 200.milliseconds)
+                  .fadeIn(duration: 1000.milliseconds, curve: Curves.easeOut)),
           Spacer(),
           Text(
             '''Experienced Flutter Developer with a background in Android development and three years of commercial experience specializing in cross-platform mobile app development. Collaborative and detail-oriented, driven by creating impactful apps that receive positive user feedback. Developed and delivered projects in healthcare, co-parenting, and booking systems''',
@@ -89,15 +82,9 @@ class _MainScreenState extends State<MainScreen> {
             textAlign: _getTextAlign(),
           )
               .animate(
-                delay: 150.milliseconds,
+                delay: 400.milliseconds,
               )
-              .fadeIn(duration: 600.milliseconds, curve: Curves.easeOut)
-              .slideY(
-                begin: 0.08,
-                end: 0,
-                duration: 600.milliseconds,
-                curve: Curves.easeOutCubic,
-              ),
+              .fadeIn(duration: 1000.milliseconds, curve: Curves.easeOut),
           Spacer(flex: 2),
           Row(
             mainAxisAlignment: ScreenUtils.isMobile(context)
@@ -125,33 +112,32 @@ class _MainScreenState extends State<MainScreen> {
             ],
           )
               .animate(
-                delay: 250.milliseconds,
+                delay: 600.milliseconds,
               )
-              .fadeIn(duration: 500.milliseconds, curve: Curves.easeOut)
-              .slideY(
-                begin: 0.1,
-                end: 0,
-                duration: 500.milliseconds,
-                curve: Curves.easeOutCubic,
-              ),
+              .fadeIn(duration: 1000.milliseconds, curve: Curves.easeOut),
           Spacer(flex: 2),
-          Align(
-            alignment: Alignment.center,
-            child: Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: Colors.white,
-              size: 60,
-            )
-                .animate(
-                  onPlay: (controller) => controller.repeat(reverse: true),
-                )
-                .moveY(
-                  begin: -6,
-                  end: 6,
-                  duration: 1000.milliseconds,
-                  curve: Curves.easeInOut,
-                ),
-          ),
+          // Align(
+          //   alignment: Alignment.center,
+          //   child: Icon(
+          //     Icons.keyboard_arrow_down_rounded,
+          //     color: Colors.white,
+          //     size: 60,
+          //   )
+          //       .animate(
+          //         delay: 800.milliseconds,
+          //         onPlay: (controller) => controller.repeat(reverse: true),
+          //       )
+          //       .fadeIn(
+          //         duration: 1200.milliseconds,
+          //         curve: Curves.easeOut,
+          //       )
+          //       .moveY(
+          //         begin: -6,
+          //         end: 6,
+          //         duration: 1000.milliseconds,
+          //         curve: Curves.easeInOut,
+          //       ),
+          // ),
           Spacer(),
         ],
       ),
