@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_portfolio/config/app_colors.dart';
 import 'package:my_portfolio/config/app_constants.dart';
 import 'package:my_portfolio/utils/screen_utils.dart';
@@ -18,9 +19,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundGradientStart,
       body: Stack(
         alignment: Alignment.center,
-        children: [_buildBackground(), _buildAnimatedListView()],
+        children: [
+          _buildBackground().animate().fadeIn(duration: 300.milliseconds),
+          _buildAnimatedListView()
+        ],
       ),
     );
   }
@@ -107,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
             actions: [
               ProjectCardAction(
                 title: "Website",
-                onTap: () => launchUrl(Uri.parse("https://eargym.com")),
+                onTap: () => launchUrl(Uri.parse("https://www.eargym.world/")),
               ),
             ],
             textAlign: _getTextAlign(),
