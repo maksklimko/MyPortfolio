@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_portfolio/config/app_colors.dart';
 import 'package:my_portfolio/config/app_constants.dart';
 import 'package:my_portfolio/utils/screen_utils.dart';
-import 'package:my_portfolio/widgets/animated_list_view.dart';
 import 'package:my_portfolio/widgets/app_icon_button.dart';
 import 'package:my_portfolio/widgets/project_card.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,65 +22,62 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          _buildBackground().animate().fadeIn(duration: 300.milliseconds),
-          _buildAnimatedListView()
+          _buildBackground().animate().fadeIn(duration: 500.milliseconds),
+          _buildContent()
         ],
       ),
     );
   }
 
-  Widget _buildAnimatedListView() {
-    return AnimatedListView(
-      spacing: AdaptiveConstants.getLargeSpacing(context),
-      items: [
-        _buildAdaptiveItem(
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: AdaptiveConstants.getLargeSpacing(context) * 2),
-              Align(
-                alignment: ScreenUtils.isMobile(context)
-                    ? Alignment.center
-                    : Alignment.centerLeft,
-                child: ClipOval(
-                  child: Image.asset(
-                    "assets/images/avatar.jpg",
-                    width: _getImageSize(),
-                    height: _getImageSize(),
-                  ),
-                ),
+  Widget _buildHeader() {
+    return SizedBox(
+      height: ScreenUtils.screenHeight(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Spacer(flex: 3),
+          Align(
+            alignment: ScreenUtils.isMobile(context)
+                ? Alignment.center
+                : Alignment.centerLeft,
+            child: ClipOval(
+              child: Image.asset(
+                "assets/images/avatar.jpg",
+                width: _getImageSize(),
+                height: _getImageSize(),
               ),
-              SizedBox(height: AdaptiveConstants.getLargeSpacing(context)),
-              SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Hi, I'm Maks",
-                  textAlign: _getTextAlign(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: AdaptiveConstants.getHeaderFontSize(context),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: AdaptiveConstants.getMediumSpacing(context)),
-              Text(
-                '''Experienced Flutter Developer with a background in Android development and three years of commercial experience specializing in cross-platform mobile app development. Collaborative and detail-oriented, driven by creating impactful apps that receive positive user feedback. Developed and delivered projects in healthcare, co-parenting, and booking systems''',
-                style: TextStyle(
-                  color: Colors.white,
-                  height: AdaptiveConstants.getTextHeight(context),
-                  fontSize: AdaptiveConstants.getBodyFontSize(context),
-                  fontWeight: FontWeight.normal,
-                ),
-                textAlign: _getTextAlign(),
-              ),
-              SizedBox(height: AdaptiveConstants.getLargeSpacing(context) * 2),
-            ],
+            ),
           ),
-        ),
-        _buildAdaptiveItem(
+          Spacer(flex: 2),
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              "Hi, I'm Maks",
+              textAlign: _getTextAlign(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: AdaptiveConstants.getHeaderFontSize(context),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Spacer(),
+          Text(
+            '''Experienced Flutter Developer with a background in Android development and three years of commercial experience specializing in cross-platform mobile app development. Collaborative and detail-oriented, driven by creating impactful apps that receive positive user feedback. Developed and delivered projects in healthcare, co-parenting, and booking systems''',
+            style: TextStyle(
+              color: Colors.white,
+              height: AdaptiveConstants.getTextHeight(context),
+              fontSize: AdaptiveConstants.getBodyFontSize(context),
+              fontWeight: FontWeight.normal,
+            ),
+            textAlign: _getTextAlign(),
+          ),
+          Spacer(flex: 2),
           Row(
-            spacing: AdaptiveConstants.getSmallSpacing(context),
+            mainAxisAlignment: ScreenUtils.isMobile(context)
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
+            spacing: AdaptiveConstants.getMediumSpacing(context),
             children: [
               AppIconButton(
                 onPressed: () {
@@ -102,52 +98,97 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ],
           ),
+          Spacer(flex: 2),
+          Align(
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: Colors.white,
+              size: 60,
+            )
+                .animate(
+                  onPlay: (controller) => controller.repeat(reverse: true),
+                )
+                .moveY(
+                  begin: -6,
+                  end: 6,
+                  duration: 1000.milliseconds,
+                  curve: Curves.easeInOut,
+                ),
+          ),
+          Spacer(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    final projects = _buildProjects();
+    final projectSpacing = AdaptiveConstants.getLargeSpacing(context);
+    final endSpacing = AdaptiveConstants.getLargeSpacing(context);
+
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: _buildAdaptiveItem(_buildHeader()),
         ),
-        _buildAdaptiveItem(
-          ProjectCard(
-            title: "Eargym",
-            description:
-                '''A wellness platform focused on enhancing hearing health through innovative auditory exercises and engaging user experiences''',
-            image: "assets/images/eargym.jpg",
-            actions: [
-              ProjectCardAction(
-                title: "Website",
-                onTap: () => launchUrl(Uri.parse("https://www.eargym.world/")),
-              ),
-            ],
-            textAlign: _getTextAlign(),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              final project = projects[index];
+              final bottomPadding =
+                  index < projects.length - 1 ? projectSpacing : endSpacing;
+
+              return Padding(
+                padding: EdgeInsets.only(bottom: bottomPadding),
+                child: _buildAdaptiveItem(project),
+              );
+            },
+            childCount: projects.length,
+            addAutomaticKeepAlives: true,
           ),
         ),
-        _buildAdaptiveItem(
-          ProjectCard(
-            title: "Habit tracking app",
-            description:
-                '''A sleek and intuitive app for building daily routines, featuring a captivating and complex start-screen animation to elevate user engagement.''',
-            image: "assets/images/habit_tracker.jpg",
-            textAlign: _getTextAlign(),
-          ),
-        ),
-        _buildAdaptiveItem(
-          ProjectCard(
-            title: "Hostel booking",
-            description:
-                '''A user-friendly hostel booking app tailored for students, offering seamless navigation, real-time availability updates, and a streamlined booking experience''',
-            image: "assets/images/hostel_booking.jpg",
-            textAlign: _getTextAlign(),
-          ),
-        ),
-        _buildAdaptiveItem(
-          ProjectCard(
-            title: "Timetravels PWA",
-            description:
-                '''Rebuilt the platform as a Progressive Web App with improved architecture, automated workflows, and an optimized tour builder for seamless use on desktop and mobile.''',
-            image: "assets/images/pwa_app.jpg",
-            textAlign: _getTextAlign(),
-          ),
-        ),
-        SizedBox(height: AdaptiveConstants.getSmallSpacing(context)),
       ],
     );
+  }
+
+  List<Widget> _buildProjects() {
+    return [
+      ProjectCard(
+        title: "Eargym",
+        description:
+            '''A wellness platform focused on enhancing hearing health through innovative auditory exercises and engaging user experiences''',
+        image: "assets/images/eargym.jpg",
+        actions: [
+          ProjectCardAction(
+            title: "Website",
+            onTap: () => launchUrl(Uri.parse("https://www.eargym.world/")),
+          ),
+        ],
+        textAlign: _getTextAlign(),
+      ),
+      ProjectCard(
+        title: "Habit tracking app",
+        description:
+            '''A sleek and intuitive app for building daily routines, featuring a captivating and complex start-screen animation to elevate user engagement.''',
+        image: "assets/images/habit_tracker.jpg",
+        textAlign: _getTextAlign(),
+      ),
+      ProjectCard(
+        title: "Hostel booking",
+        description:
+            '''A user-friendly hostel booking app tailored for students, offering seamless navigation, real-time availability updates, and a streamlined booking experience''',
+        image: "assets/images/hostel_booking.jpg",
+        textAlign: _getTextAlign(),
+      ),
+      ProjectCard(
+        title: "Timetravels PWA",
+        description:
+            '''Rebuilt the platform as a Progressive Web App with improved architecture, automated workflows, and an optimized tour builder for seamless use on desktop and mobile.''',
+        image: "assets/images/pwa_app.jpg",
+        textAlign: _getTextAlign(),
+      ),
+    ];
   }
 
   TextAlign _getTextAlign() {
