@@ -20,6 +20,13 @@ class AdaptiveConstants {
         desktop: 20,
       );
 
+  static double getButtonFontSize(BuildContext context) =>
+      ScreenUtils.responsiveValue<double>(
+        context,
+        mobile: 14,
+        desktop: 14,
+      );
+
   static double getCardBorderRadius(BuildContext context) =>
       ScreenUtils.responsiveValue<double>(
         context,

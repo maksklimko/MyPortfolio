@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_portfolio/config/app_colors.dart';
 import 'package:my_portfolio/config/app_constants.dart';
 import 'package:my_portfolio/utils/screen_utils.dart';
+import 'package:my_portfolio/widgets/app_button.dart';
 
 class ProjectCardAction {
   final String title;
@@ -16,7 +17,7 @@ class ProjectCard extends StatelessWidget {
     required this.title,
     required this.description,
     this.image,
-    this.actions,
+    this.actions = const [],
     this.textAlign = TextAlign.start,
   });
   final String title;
@@ -24,7 +25,7 @@ class ProjectCard extends StatelessWidget {
   final String? image;
 
   final TextAlign textAlign;
-  final List<ProjectCardAction>? actions;
+  final List<ProjectCardAction> actions;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -70,6 +71,30 @@ class ProjectCard extends StatelessWidget {
                           fontSize: AdaptiveConstants.getBodyFontSize(context),
                           fontWeight: FontWeight.normal,
                         ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: AdaptiveConstants.getSmallSpacing(context),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        spacing: AdaptiveConstants.getSmallSpacing(context),
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: actions.map((action) {
+                          if (textAlign == TextAlign.center) {
+                            return Expanded(
+                              child: AppButton(
+                                onPressed: action.onTap!,
+                                title: action.title,
+                              ),
+                            );
+                          }
+                          return AppButton(
+                            onPressed: action.onTap!,
+                            title: action.title,
+                          );
+                        }).toList(),
                       ),
                     ),
                   ],

@@ -3,6 +3,7 @@ import 'package:my_portfolio/config/app_colors.dart';
 import 'package:my_portfolio/config/app_constants.dart';
 import 'package:my_portfolio/utils/screen_utils.dart';
 import 'package:my_portfolio/widgets/animated_list_view.dart';
+import 'package:my_portfolio/widgets/app_icon_button.dart';
 import 'package:my_portfolio/widgets/project_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -70,6 +71,30 @@ class _MainScreenState extends State<MainScreen> {
                 textAlign: _getTextAlign(),
               ),
               SizedBox(height: AdaptiveConstants.getLargeSpacing(context) * 2),
+            ],
+          ),
+        ),
+        _buildAdaptiveItem(
+          Row(
+            spacing: AdaptiveConstants.getSmallSpacing(context),
+            children: [
+              AppIconButton(
+                onPressed: () {
+                  launchUrl(Uri.parse(
+                      "https://www.linkedin.com/in/maks-klimko-29ab071b0/"));
+                },
+                icon: "assets/icons/linkedin_icon.svg",
+              ),
+              AppIconButton(
+                onPressed: () {
+                  final Uri emailLaunchUri = Uri(
+                    scheme: 'mailto',
+                    path: 'maks.klmqaz@gmail.com',
+                  );
+                  launchUrl(emailLaunchUri);
+                },
+                icon: "assets/icons/mail_icon.svg",
+              ),
             ],
           ),
         ),
