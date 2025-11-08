@@ -34,7 +34,7 @@ jobs:
 
       - name: Build web for Pages
         working-directory: ${{ env.PATH_TO_APP }}
-        run: flutter build web --base-href "${{ steps.pages.outputs.base_path }}/"
+        run: flutter build web --base-href /
 
       - name: Upload web build artifact
         uses: actions/upload-pages-artifact@v3
