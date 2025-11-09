@@ -7,12 +7,14 @@ class AppIconButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.icon,
-    this.size = 25,
+    this.size = 30,
+    this.padding = 5,
   });
 
   final VoidCallback onPressed;
   final String icon;
   final double size;
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +23,12 @@ class AppIconButton extends StatelessWidget {
       icon: SvgPicture.asset(
         icon,
         height: size,
-        width: size,
       ),
       style: IconButton.styleFrom(
         backgroundColor: Colors.white,
         foregroundColor: AppColors.cardGradientStart,
         shape: CircleBorder(),
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(padding),
       ),
     );
   }

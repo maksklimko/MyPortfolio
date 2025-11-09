@@ -6,9 +6,16 @@ import 'package:my_portfolio/widgets/app_button.dart';
 
 class ProjectCardAction {
   final String title;
+  final String? icon;
   final VoidCallback? onTap;
 
-  ProjectCardAction({required this.title, this.onTap});
+  ProjectCardAction({required this.title, this.icon, this.onTap});
+  ProjectCardAction.web({required this.title, required this.onTap})
+      : icon = "assets/icons/web_icon.svg";
+  ProjectCardAction.android({required this.title, required this.onTap})
+      : icon = "assets/icons/android_icon.svg";
+  ProjectCardAction.ios({required this.title, required this.onTap})
+      : icon = "assets/icons/apple_icon.svg";
 }
 
 class ProjectCard extends StatelessWidget {
@@ -87,12 +94,14 @@ class ProjectCard extends StatelessWidget {
                               child: AppButton(
                                 onPressed: action.onTap!,
                                 title: action.title,
+                                icon: action.icon,
                               ),
                             );
                           }
                           return AppButton(
                             onPressed: action.onTap!,
                             title: action.title,
+                            icon: action.icon,
                           );
                         }).toList(),
                       ),
