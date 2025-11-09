@@ -101,6 +101,16 @@ class _MainScreenState extends State<MainScreen> {
                       "https://www.linkedin.com/in/maks-klimko-29ab071b0/"));
                 },
                 icon: "assets/icons/linkedin_icon.svg",
+                size: 20,
+                padding: 5,
+              ),
+              AppIconButton(
+                onPressed: () {
+                  launchUrl(Uri.parse("https://github.com/maksklimko"));
+                },
+                icon: "assets/icons/github_icon.svg",
+                size: 30,
+                padding: 5,
               ),
               AppIconButton(
                 onPressed: () {
@@ -111,6 +121,8 @@ class _MainScreenState extends State<MainScreen> {
                   launchUrl(emailLaunchUri);
                 },
                 icon: "assets/icons/mail_icon.svg",
+                size: 20,
+                padding: 0,
               ),
             ],
           )
@@ -185,9 +197,25 @@ class _MainScreenState extends State<MainScreen> {
             '''A wellness platform focused on enhancing hearing health through innovative auditory exercises and engaging user experiences''',
         image: "assets/images/eargym.jpg",
         actions: [
-          ProjectCardAction(
+          ProjectCardAction.web(
             title: "Website",
             onTap: () => launchUrl(Uri.parse("https://www.eargym.world/")),
+          ),
+          ProjectCardAction.android(
+            title: "Google play",
+            onTap: () => launchUrl(
+              Uri.parse(
+                "https://play.google.com/store/apps/details?id=com.app.eargym&hl=uk",
+              ),
+            ),
+          ),
+          ProjectCardAction.ios(
+            title: "App store",
+            onTap: () => launchUrl(
+              Uri.parse(
+                "https://apps.apple.com/us/app/eargym-improve-hearing-health/id1557905391",
+              ),
+            ),
           ),
         ],
         textAlign: _getTextAlign(),
