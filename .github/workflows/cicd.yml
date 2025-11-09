@@ -34,7 +34,7 @@ jobs:
 
       - name: Build web for Pages
         working-directory: ${{ env.PATH_TO_APP }}
-        run: flutter build web --base-href /
+        run: flutter build web --release --wasm --base-href /
 
       - name: Upload web build artifact
         uses: actions/upload-pages-artifact@v3
