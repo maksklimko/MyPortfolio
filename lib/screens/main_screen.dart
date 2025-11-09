@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_portfolio/config/app_colors.dart';
@@ -30,8 +32,9 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildHeader() {
+    final screenHeight = ScreenUtils.screenHeight(context);
     return SizedBox(
-      height: ScreenUtils.screenHeight(context),
+      height: screenHeight < 600 ? null : min(screenHeight, 1000),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

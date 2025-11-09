@@ -32,11 +32,78 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <div id="splash">
+    <span class="loader"></span>
+  </div>
+
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+
+    const splash = document.getElementById('splash');
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    requestAnimationFrame(() => splash.classList.add('show'));
+
+    window.addEventListener('load', function () {
+      _flutter.loader.load({
+        onEntrypointLoaded: async function (engineInitializer) {
+          console.info('Flutter web: initializing engine…');
+          const appRunner = await engineInitializer.initializeEngine();
+
+          requestAnimationFrame(() => splash.classList.remove('show'));
+          await delay(200);
+          console.info('Flutter web: running app…');
+          await appRunner.runApp();
+        }
+      });
+    });
+  </script>
 </body>
 <style>
-  html, body {
+  html {
     background: #262829;
   }
+
+  body {
+    margin: 0;
+  }
+
+  #splash {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: #262829;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  #splash.show {
+    opacity: 1;
+  }
+
+  /* Loader from https://cssloaders.github.io/ */
+  .loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #FFF;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
 </style>
 </html>
