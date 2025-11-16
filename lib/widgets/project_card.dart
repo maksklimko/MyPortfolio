@@ -3,6 +3,7 @@ import 'package:my_portfolio/config/app_colors.dart';
 import 'package:my_portfolio/config/app_constants.dart';
 import 'package:my_portfolio/utils/screen_utils.dart';
 import 'package:my_portfolio/widgets/app_button.dart';
+import 'package:my_portfolio/widgets/project_preview_video_player.dart';
 
 class ProjectCardAction {
   final String title;
@@ -18,21 +19,38 @@ class ProjectCardAction {
       : icon = "assets/icons/apple_icon.svg";
 }
 
+enum ProjectMediaType { image, video }
+
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({
+  const ProjectCard.withImage({
     super.key,
     required this.title,
     required this.description,
-    this.image,
     this.actions = const [],
-    this.textAlign = TextAlign.start,
+    required this.textAlign,
+    required this.mediaUrl,
+    this.mediaType = ProjectMediaType.image,
+  }) : thumbnailAsset = '';
+
+  const ProjectCard.withVideo({
+    super.key,
+    required this.title,
+    required this.description,
+    this.actions = const [],
+    required this.textAlign,
+    required this.mediaUrl,
+    required this.thumbnailAsset,
+    this.mediaType = ProjectMediaType.video,
   });
+
   final String title;
   final String description;
-  final String? image;
-
+  final String mediaUrl;
+  final String thumbnailAsset;
+  final ProjectMediaType mediaType;
   final TextAlign textAlign;
   final List<ProjectCardAction> actions;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -109,23 +127,36 @@ class ProjectCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (image != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(
-                      AdaptiveConstants.getCardBorderRadius(context),
-                    ),
-                    bottomRight: Radius.circular(
-                      AdaptiveConstants.getCardBorderRadius(context),
-                    ),
-                  ),
-                  child: Image.asset(image!, fit: BoxFit.fitWidth),
-                ),
+              _buildMedia(context),
             ],
           ),
         ),
       ],
     );
+  }
+
+  Widget _buildMedia(BuildContext context) {
+    final borderRadius = BorderRadius.only(
+      bottomLeft: Radius.circular(
+        AdaptiveConstants.getCardBorderRadius(context),
+      ),
+      bottomRight: Radius.circular(
+        AdaptiveConstants.getCardBorderRadius(context),
+      ),
+    );
+
+    if (mediaType == ProjectMediaType.video) {
+      return ProjectPreviewVideoPlayer(
+        videoUrl: mediaUrl,
+        borderRadius: borderRadius,
+        thumbnailAsset: thumbnailAsset,
+      );
+    } else {
+      return ClipRRect(
+        borderRadius: borderRadius,
+        child: Image.asset(mediaUrl, fit: BoxFit.fitWidth),
+      );
+    }
   }
 
   EdgeInsets _getContentPadding(BuildContext context) {
