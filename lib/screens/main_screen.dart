@@ -191,11 +191,11 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _buildProjects() {
     return [
-      ProjectCard(
+      ProjectCard.withImage(
         title: "Eargym",
         description:
             '''A wellness platform focused on enhancing hearing health through innovative auditory exercises and engaging user experiences''',
-        image: "assets/images/eargym.jpg",
+        mediaUrl: "assets/images/eargym.jpg",
         actions: [
           ProjectCardAction.web(
             title: "Website",
@@ -220,25 +220,34 @@ class _MainScreenState extends State<MainScreen> {
         ],
         textAlign: _getTextAlign(),
       ),
-      ProjectCard(
+      // ProjectCard.withVideo(
+      //   title: "Video Test Project",
+      //   description:
+      //       '''Test video card demonstrating video playback capabilities with autoplay, looping, and no controls.''',
+      //   mediaUrl:
+      //       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      //   thumbnailAsset: "assets/images/habit_tracker.jpg",
+      //   textAlign: _getTextAlign(),
+      // ),
+      ProjectCard.withImage(
         title: "Habit tracking app",
         description:
             '''A sleek and intuitive app for building daily routines, featuring a captivating and complex start-screen animation to elevate user engagement.''',
-        image: "assets/images/habit_tracker.jpg",
+        mediaUrl: "assets/images/habit_tracker.jpg",
         textAlign: _getTextAlign(),
       ),
-      ProjectCard(
+      ProjectCard.withImage(
         title: "Hostel booking",
         description:
             '''A user-friendly hostel booking app tailored for students, offering seamless navigation, real-time availability updates, and a streamlined booking experience''',
-        image: "assets/images/hostel_booking.jpg",
+        mediaUrl: "assets/images/hostel_booking.jpg",
         textAlign: _getTextAlign(),
       ),
-      ProjectCard(
+      ProjectCard.withImage(
         title: "Timetravels PWA",
         description:
             '''Rebuilt the platform as a Progressive Web App with improved architecture, automated workflows, and an optimized tour builder for seamless use on desktop and mobile.''',
-        image: "assets/images/pwa_app.jpg",
+        mediaUrl: "assets/images/pwa_app.jpg",
         textAlign: _getTextAlign(),
       ),
     ];
