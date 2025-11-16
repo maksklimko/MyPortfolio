@@ -112,7 +112,7 @@ class _ProjectPreviewVideoPlayerState extends State<ProjectPreviewVideoPlayer>
   }
 
   Widget _buildLoadingWidget() {
-    if (widget.thumbnailAsset != null) {
+    if (widget.thumbnailAsset.isNotEmpty) {
       return _buildThumbnailWidget();
     }
 
@@ -133,7 +133,7 @@ class _ProjectPreviewVideoPlayerState extends State<ProjectPreviewVideoPlayer>
         children: [
           // Thumbnail image
           Image.asset(
-            widget.thumbnailAsset!,
+            widget.thumbnailAsset,
             fit: BoxFit.cover,
           ),
           // Blur effect
