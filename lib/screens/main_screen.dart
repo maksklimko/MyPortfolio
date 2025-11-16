@@ -191,6 +191,21 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _buildProjects() {
     return [
+      ProjectCard.withVideo(
+        title: "Refactoring Guru Mobile",
+        description:
+            '''A mobile adaptation of the popular Refactoring Guru website, providing access to design patterns, refactoring techniques, and software development best practices through an intuitive native mobile experience with WebView integration.''',
+        mediaUrl:
+            "https://maksklm.com/hosted_assets/refactoring_guru_preview.mp4",
+        thumbnailAsset: "assets/images/refactoring_guru_thumbnail.png",
+        actions: [
+          ProjectCardAction.web(
+            title: "Website",
+            onTap: () => launchUrl(Uri.parse("https://refactoring.guru/")),
+          ),
+        ],
+        textAlign: _getTextAlign(),
+      ),
       ProjectCard.withImage(
         title: "Eargym",
         description:
@@ -220,15 +235,6 @@ class _MainScreenState extends State<MainScreen> {
         ],
         textAlign: _getTextAlign(),
       ),
-      // ProjectCard.withVideo(
-      //   title: "Video Test Project",
-      //   description:
-      //       '''Test video card demonstrating video playback capabilities with autoplay, looping, and no controls.''',
-      //   mediaUrl:
-      //       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      //   thumbnailAsset: "assets/images/habit_tracker.jpg",
-      //   textAlign: _getTextAlign(),
-      // ),
       ProjectCard.withImage(
         title: "Habit tracking app",
         description:

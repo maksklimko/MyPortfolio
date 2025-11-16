@@ -1,6 +1,7 @@
 // Separate stateful widget for video playback
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:video_player/video_player.dart';
 
 class ProjectPreviewVideoPlayer extends StatefulWidget {
@@ -70,20 +71,31 @@ class _ProjectPreviewVideoPlayerState extends State<ProjectPreviewVideoPlayer>
     super.build(context); // Required for AutomaticKeepAliveClientMixin
     return ClipRRect(
       borderRadius: widget.borderRadius,
-      child: _hasError
-          ? _buildErrorWidget()
-          : _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : _buildLoadingWidget(),
+      child: AspectRatio(
+        aspectRatio: 4 / 3,
+        child: _hasError
+            ? _buildErrorWidget()
+            : Stack(
+                fit: StackFit.expand,
+                children: [
+                  // Thumbnail/loading layer (always visible until video loads)
+                  _buildLoadingWidget(),
+                  // Video layer (fades in when ready)
+                  if (_controller.value.isInitialized)
+                    AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    ).animate().fadeIn(
+                        duration: 600.milliseconds, curve: Curves.easeOut),
+                ],
+              ),
+      ),
     );
   }
 
   Widget _buildErrorWidget() {
     return Container(
-      height: 200,
+      width: double.infinity,
       color: Colors.black26,
       padding: const EdgeInsets.all(20),
       child: Center(
@@ -113,22 +125,7 @@ class _ProjectPreviewVideoPlayerState extends State<ProjectPreviewVideoPlayer>
 
   Widget _buildLoadingWidget() {
     if (widget.thumbnailAsset.isNotEmpty) {
-      return _buildThumbnailWidget();
-    }
-
-    return Container(
-      height: 200,
-      color: Colors.black26,
-      child: const Center(
-        child: CircularProgressIndicator(color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _buildThumbnailWidget() {
-    return SizedBox(
-      height: 200,
-      child: Stack(
+      return Stack(
         fit: StackFit.expand,
         children: [
           // Thumbnail image
@@ -148,6 +145,14 @@ class _ProjectPreviewVideoPlayerState extends State<ProjectPreviewVideoPlayer>
             child: CircularProgressIndicator(color: Colors.white),
           ),
         ],
+      );
+    }
+
+    return Container(
+      width: double.infinity,
+      color: Colors.black26,
+      child: const Center(
+        child: CircularProgressIndicator(color: Colors.white),
       ),
     );
   }
